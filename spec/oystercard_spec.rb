@@ -4,7 +4,7 @@ describe Oystercard do
 
   describe "#new card" do
 
-    it 'should have a default balance of 0' do
+    it "should have a default balance of #{Oystercard::DEFAULT_BALANCE}" do
       expect(subject.balance).to eq Oystercard::DEFAULT_BALANCE
     end
 
