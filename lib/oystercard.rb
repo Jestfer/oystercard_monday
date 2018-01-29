@@ -1,5 +1,4 @@
 class Oystercard
-
   DEFAULT_BALANCE = 0
 
   attr_reader :balance
@@ -8,8 +7,8 @@ class Oystercard
     @balance = balance
   end
 
-  def top_up(pounds)
-    pounds
+  def top_up(amount)
+    @balance += amount
   end
 
 end
