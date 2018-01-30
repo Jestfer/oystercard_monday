@@ -24,7 +24,13 @@ describe Oystercard do
   describe "#deduct" do
 
     it "should deduct oyster bt n amount" do
-      expect{ subject.deduct(5)}.to change{ subject.balance }.by -5
+      expect{ subject.deduct(5) }.to change{ subject.balance }.by -5
+    end
+  end
+
+  describe "#in_journey?" do
+    it "should be false at start" do
+      expect(subject.in_journey?). to eq false
     end
   end
 end
