@@ -16,10 +16,8 @@ describe Oystercard do
       expect{ subject.top_up(5) }.to change{ subject.balance }.by 5
     end
 
-    it 'should not exceed 90 pounds' do
-      expect{ subject.top_up(91) }.to raise_error("Exceeded top-up maximum amount")
+    it 'should not exceed maximum limit' do
+      expect{ subject.top_up(Oystercard::MAXIMUM_LIMIT + 1) }.to raise_error("Exceeded top-up maximum amount of #{Oystercard::MAXIMUM_LIMIT}")
     end
   end
 end
-
-
