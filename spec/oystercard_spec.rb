@@ -51,8 +51,19 @@ describe Oystercard do
   end
 
   describe "#insufficient funds" do
-    it "Gives an error if insufficient funds on card when touch-in" do
+    it "gives an error if insufficient funds on card when touch-in" do
       expect{ subject.touch_in }.to raise_error("Insufficient funds")
+    end
+  end
+
+  describe "#history" do
+    before do
+      subject.top_up(6)
+      subject.touch_in
+    end
+
+    it "remembers the last station the user touched in" do
+      expect(subject.station).to eq 'richmond'
     end
   end
 
