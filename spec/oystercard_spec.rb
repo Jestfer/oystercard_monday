@@ -21,13 +21,6 @@ describe Oystercard do
     end
   end
 
-  # describe "#deduct" do
-  #
-  #   it "should deduct oyster bt n amount" do
-  #     expect{ subject.deduct(5) }.to change{ subject.balance }.by(-5)
-  #   end
-  # end
-
   describe "#in_journey?" do
 
     it "should be false at start" do
@@ -35,23 +28,25 @@ describe Oystercard do
     end
   end
 
-  describe "#touch-in" do
-    it "should change in-journey to true" do
+  context "when topped up £5 and touched in" do
+    before do
       subject.top_up(5)
       subject.touch_in
-      expect(subject.in_journey?).to eq true
     end
-  end
+    describe "#touch_in" do
+      it "should change in-journey to true" do
+        expect(subject.in_journey?).to eq true
+      end
+    end
 
-  describe "#touch-out" do
-    it "should change in-journey back to false" do
-      subject.top_up(5)
-      subject.touch_in
-      subject.touch_out
-      expect(subject.in_journey?).to eq false
-    end
-    it "should deduct from card when touched out" do
-      expect { subject.touch_out }.to change{ subject.balance }.by(-2)
+    describe "#touch_out" do
+      it "should change in-journey back to false" do
+        subject.touch_out
+        expect(subject.in_journey?).to eq false
+      end
+      it "should deduct from card when touched out" do
+        expect { subject.touch_out }.to change{ subject.balance }.by(-2)
+      end
     end
   end
 
