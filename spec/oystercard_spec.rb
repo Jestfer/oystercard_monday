@@ -2,7 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 
-  let(:station) {'a station'}
+  let(:entry_station) {'richmond'}
+  let(:exit_station) {'aldgaste_east'}
 
   describe "#new card" do
 
@@ -33,38 +34,44 @@ describe Oystercard do
   context "when topped up £5 and touched in" do
     before do
       subject.top_up(5)
-      subject.touch_in(station)
+      subject.touch_in(entry_station)
     end
     describe "#touch_in" do
       it "should change in-journey to true" do
         expect(subject.in_journey?).to eq true
       end
 
-      it "records the entry station" do
-        expect(subject.entry_station).to eq station
+      it "it should record the entry station" do
+        expect(subject.entry_station).to eq entry_station
       end
     end
 
     describe "#touch_out" do
       it "should change in-journey back to false" do
-        subject.touch_out
+        subject.touch_out(exit_station)
         expect(subject.in_journey?).to eq false
       end
       it "should deduct from card when touched out" do
-        expect { subject.touch_out }.to change{ subject.balance }.by(-2)
+        expect { subject.touch_out(exit_station) }.to change{ subject.balance }.by(-2)
       end
       it "should set the entry station to nil" do
-        subject.touch_out
+        subject.touch_out(exit_station)
         expect(subject.entry_station).to eq nil
+      end
+      it "should record the exit station" do
+        subject.touch_out(exit_station)
+        expect(subject.exit_station).to eq exit_station
       end
     end
   end
 
   describe "#insufficient funds" do
     it "gives an error if insufficient funds on card when touch-in" do
-      expect{ subject.touch_in(station) }.to raise_error("Insufficient funds")
+      expect{ subject.touch_in(entry_station) }.to raise_error("Insufficient funds")
     end
   end
+
+  describe "#shovels journeys and we can check history"
 
 
 end
