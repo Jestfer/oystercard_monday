@@ -65,6 +65,23 @@ describe Oystercard do
     end
   end
 
+  context "after a completed journey" do
+    before do
+      subject.top_up(40)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+    end
+
+    describe "#history" do
+      it "should contain an array of journeys" do
+        expect(subject.history).to eq [{entry_station: entry_station, exit_station: exit_station}]
+        subject.touch_in(entry_station)
+        subject.touch_out(exit_station)
+        expect(subject.history).to eq [{entry_station: entry_station, exit_station: exit_station},{entry_station: entry_station, exit_station: exit_station}]
+      end
+    end
+  end
+
   describe "#insufficient funds" do
     it "gives an error if insufficient funds on card when touch-in" do
       expect{ subject.touch_in(entry_station) }.to raise_error("Insufficient funds")
