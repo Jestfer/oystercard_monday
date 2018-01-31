@@ -6,11 +6,11 @@ describe Station do
 
   describe "#initialize variables" do
     it "should know its name" do
-      expect(station.name).to eq "aldgate east"
+      expect(subject.name).to eq "aldgate east"
     end
 
     it "should know its zone" do
-      expect(station.zone).to eq 1
+      expect(subject.zone).to eq 1
     end
   end
 end
